@@ -1,0 +1,7 @@
+{
+  "name": "CU Talking",
+  "description": "An interactive English learning application using Gemini Live API for real-time conversational practice with gamified progression.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
