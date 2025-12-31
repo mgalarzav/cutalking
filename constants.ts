@@ -15,6 +15,7 @@ export const INITIAL_STATS: UserStats = {
   streak: 5,
   dialoguesCompleted: 12,
   level: 4,
+  stars: 0,
 };
 
 export const SCENARIOS: Scenario[] = [

@@ -1,5 +1,5 @@
 
-export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
+export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
 export type FeedbackLanguage = 'ES' | 'EN' | 'DE';
 export type AvatarId = 'max' | 'linda';
 
@@ -17,6 +17,7 @@ export interface UserStats {
   streak: number;
   dialoguesCompleted: number;
   level: number; // User gamification level
+  stars: number;
 }
 
 export interface Scenario {
@@ -56,7 +57,18 @@ export interface FeedbackData {
   pronunciationAnalysis: PronunciationIssue[];
   grammarAnalysis: GrammarError[];
   positivePoints: string[];
-  practicePhrases: string[]; // New field for practice
+  practicePhrases: string[];
+  skillRadar?: {
+    grammar: number;
+    vocabulary: number;
+    pronunciation: number;
+    fluency: number;
+    coherence: number;
+  };
+  missionObjectives?: {
+    objective: string;
+    completed: boolean;
+  }[];
 }
 
 export enum AppStatus {
