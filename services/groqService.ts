@@ -15,7 +15,24 @@ export class GroqService {
             return "Error: Missing VITE_GROQ_API_KEY. Please get a free key from console.groq.com";
         }
 
-        const systemPrompt = `You are ${settings.teacherName}, a friendly English teacher. Roleplay as ${scenario.role} in a ${scenario.title} scenario. User level: ${settings.level}. Objective: ${scenario.objective}. Keep responses short (1-3 sentences).`;
+        const levelInstructions: Record<string, string> = {
+            'A1': 'Use very simple vocabulary, basic present tense, and short, clear sentences. Avoid idioms or complex structures.',
+            'A2': 'Use basic everyday vocabulary, simple past and future tenses. Keep sentences relatively short but natural.',
+            'B1': 'Use a mix of tenses (present perfect, modals), basic connectors, and start introducing some common phrasal verbs. Encourage the student to explain their thoughts.',
+            'B2': 'Use more advanced vocabulary, phrasal verbs, and some common idioms. Use complex sentence structures and ask more open-ended, challenging questions.',
+            'C1': 'Use sophisticated vocabulary, varied registers (formal/informal), and subtle nuances. Use complex grammatical structures and expect high-level reasoning.',
+            'C2': 'Use near-native level language, including rare idioms, complex metaphors, and cultural references. Engage in deep, nuanced conversation with high complexity.'
+        };
+
+        const levelPrompt = levelInstructions[settings.level] || levelInstructions['B1'];
+
+        const systemPrompt = `You are ${settings.teacherName}, a friendly English teacher. 
+        Roleplay as ${scenario.role} in a ${scenario.title} scenario. 
+        User level: ${settings.level}. 
+        Complexity requirement: ${levelPrompt}
+        Objective: ${scenario.objective}. 
+        Keep responses natural for the role but strictly adhere to the complexity level. 
+        Keep responses between 1-3 sentences.`;
 
         const messages = [
             { role: "system", content: systemPrompt },
@@ -79,7 +96,7 @@ export class GroqService {
         }
     }
 
-    async generateFeedback(transcript: { role: string; text: string }[], scenario: Scenario): Promise<any> {
+    async generateFeedback(transcript: { role: string; text: string }[], scenario: Scenario, level: string): Promise<any> {
         if (!GROQ_API_KEY) return {
             score: 0,
             summary: "Groq API Key missing.",
@@ -92,16 +109,19 @@ export class GroqService {
         const prompt = `
           Analyze this dialogue transcript between a user (student) and an AI (teacher roleplaying as ${scenario.role}).
           Scenario: ${scenario.title}.
+          Student Level: ${level}.
           
           Transcript:
           ${transcript.map(t => `${t.role}: ${t.text}`).join('\n')}
     
           Provide structured feedback focusing ONLY on the 'user' (student) dialogue. Do NOT analyze or correct the 'model' (AI) responses.
+          The feedback should be appropriate for the student's level (${level}).
           
           1. Identify Grammar Errors in the USER's speech: Classify them (e.g., 'Verb Tense', 'Article Usage', 'Word Choice').
           2. Analyze Pronunciation: Identify words that might have been hard for the USER based on the transcript context (or common mistakes). Specify the target phoneme (e.g. 'th' or 'v').
           4. Evaluate 5 Key Skills (0-100): Grammar, Vocabulary, Pronunciation, Fluency, Coherence.
           5. Check Mission Objectives: Based on the scenario objective "${scenario.objective}", identify 3 key sub-tasks and whether the user completed them.
+
 
           Format response as VALID JSON with this structure:
           {

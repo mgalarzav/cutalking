@@ -163,7 +163,7 @@ const Session: React.FC = () => {
 
     setStatus(AppStatus.PROCESSING_FEEDBACK);
     try {
-      const feedbackData = await groqService.generateFeedback(currentTranscripts, scenario!);
+      const feedbackData = await groqService.generateFeedback(currentTranscripts, scenario!, settings.level);
 
       if (feedbackData.score === 0 && feedbackData.summary === "Could not generate feedback.") {
         setStatus(AppStatus.IDLE);

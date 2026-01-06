@@ -48,108 +48,160 @@ const Welcome: React.FC<WelcomeProps> = ({ onLogin }) => {
     };
 
     return (
-        <div className="min-h-screen w-full relative overflow-hidden bg-slate-900 flex items-center justify-center">
-            {/* Animated Background Elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[120px] animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/20 rounded-full blur-[120px] animate-pulse delay-1000" />
-                <div className="absolute top-[20%] right-[20%] w-[30%] h-[30%] bg-cyan-500/10 rounded-full blur-[80px] animate-pulse delay-700" />
+        <div className="h-screen w-full relative overflow-hidden bg-[#020617] flex flex-col lg:flex-row">
+            {/* Dynamic Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute inset-0 bg-[url('/language_learning_bg.png')] bg-cover bg-center opacity-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-[#020617] to-purple-900/20" />
+
+                {/* Floating Particles/Glows */}
+                {[...Array(5)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        animate={{
+                            x: [0, Math.random() * 100 - 50, 0],
+                            y: [0, Math.random() * 100 - 50, 0],
+                            opacity: [0.1, 0.3, 0.1],
+                        }}
+                        transition={{
+                            duration: 10 + Math.random() * 10,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                        className="absolute rounded-full blur-[100px]"
+                        style={{
+                            width: `${300 + Math.random() * 300}px`,
+                            height: `${300 + Math.random() * 300}px`,
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            background: i % 2 === 0 ? 'rgba(59, 130, 246, 0.15)' : 'rgba(147, 51, 234, 0.15)',
+                        }}
+                    />
+                ))}
             </div>
 
-            <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-24">
-
-                {/* Left Side: Branding & Welcome Message */}
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-center md:text-left max-w-lg"
-                >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium mb-6 backdrop-blur-sm">
-                        <Sparkles size={14} />
-                        <span>AI-Powered Language Learning</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight">
-                        Master English with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">CU-Talking</span>
-                    </h1>
-
-                    <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-                        Immerse yourself in realistic conversations with AI avatars.
-                        Practice speaking, improve your pronunciation, and gain confidence in a safe environment.
-                    </p>
-
-                    <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-slate-500 font-medium">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-green-500" />
-                            Real-time Feedback
+            {/* Left Side: Information & Features */}
+            <div className="flex-[1.2] relative z-10 flex items-center justify-center p-6 lg:p-16 overflow-y-auto">
+                <div className="max-w-xl w-full">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-400/80 text-[9px] font-bold uppercase tracking-[0.25em] mb-6">
+                            <Sparkles size={10} />
+                            <span>Next-Gen Language Platform</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-blue-500" />
-                            Interactive Scenarios
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-purple-500" />
-                            Personalized Learning
-                        </div>
-                    </div>
-                </motion.div>
 
-                {/* Right Side: Login Form */}
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="w-full max-w-md"
-                >
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
-                        {/* Subtle shine effect */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                        <h1 className="text-3xl lg:text-5xl font-black text-white mb-5 leading-[1.15] tracking-tight">
+                            Master English with <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+                                Intelligence.
+                            </span>
+                        </h1>
 
-                        <div className="mb-8 text-center">
-                            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20 transform rotate-3 group-hover:rotate-6 transition-transform duration-300">
-                                <Globe className="text-white w-8 h-8" />
+                        <p className="text-base text-slate-400/90 mb-10 leading-relaxed font-medium max-w-md">
+                            Experience immersive AI conversations that adapt to your fluency level in real-time.
+                        </p>
+
+                        {/* Feature Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                            {[
+                                { icon: Globe, title: "Global Scenarios", desc: "Real-world business & social contexts." },
+                                { icon: Sparkles, title: "AI Feedback", desc: "Instant linguistic corrections & tips." },
+                                { icon: User, title: "Smart Avatars", desc: "Natural voices & realistic interactions." },
+                                { icon: ArrowRight, title: "Fast Progress", desc: "Accelerate your fluency by 3x." }
+                            ].map((feature, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 + idx * 0.1 }}
+                                    className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all group"
+                                >
+                                    <div className="w-9 h-9 rounded-xl bg-blue-500/5 flex items-center justify-center text-blue-400/70 mb-3 group-hover:scale-110 transition-transform">
+                                        <feature.icon size={18} />
+                                    </div>
+                                    <h3 className="text-white text-sm font-bold mb-1">{feature.title}</h3>
+                                    <p className="text-slate-500 text-[11px] leading-relaxed">{feature.desc}</p>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Stats */}
+                        <div className="flex gap-10 border-t border-white/[0.05] pt-8">
+                            <div>
+                                <div className="text-xl font-black text-white/90 mb-0.5">24/7</div>
+                                <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Availability</div>
                             </div>
-                            <h2 className="text-2xl font-bold text-white">Welcome Back</h2>
-                            <p className="text-slate-400 text-sm mt-1">Sign in to continue your journey</p>
+                            <div>
+                                <div className="text-xl font-black text-white/90 mb-0.5">100%</div>
+                                <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Personalized</div>
+                            </div>
+                            <div>
+                                <div className="text-xl font-black text-white/90 mb-0.5">AI</div>
+                                <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Powered</div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* Right Side: Login Form */}
+            <div className="flex-1 relative z-10 flex items-center justify-center p-6 lg:p-16 bg-white/[0.01] lg:bg-transparent overflow-y-auto">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="w-full max-w-[380px]"
+                >
+                    <div className="bg-white/[0.02] backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+                        {/* Branding */}
+                        <div className="text-center mb-8">
+                            <motion.img
+                                whileHover={{ scale: 1.05 }}
+                                src="/LogoCU.png"
+                                alt="CU Talking Logo"
+                                className="h-40 w-auto mx-auto drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+                            />
                         </div>
 
                         {error && (
                             <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                className="bg-red-500/10 border border-red-500/50 text-red-400 p-3 rounded-xl mb-6 text-sm text-center"
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-red-500/5 border border-red-500/10 text-red-400/80 p-3 rounded-xl mb-6 text-[11px] text-center font-medium"
                             >
                                 {error}
                             </motion.div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Username</label>
-                                <div className="relative group/input">
-                                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 group-focus-within/input:text-blue-400 transition-colors w-5 h-5" />
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] ml-1">Username</label>
+                                <div className="relative group">
+                                    <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-blue-400 transition-colors w-5 h-5" />
                                     <input
                                         type="text"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                        className="w-full bg-slate-900/50 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
-                                        placeholder="Enter your username"
+                                        className="w-full bg-slate-950/40 border border-white/[0.05] rounded-xl py-3.5 pl-11 pr-5 text-white text-sm placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all"
+                                        placeholder="Enter username"
                                         required
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Password</label>
-                                <div className="relative group/input">
-                                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 group-focus-within/input:text-blue-400 transition-colors w-5 h-5" />
+                            <div className="space-y-2">
+                                <label className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em] ml-1">Password</label>
+                                <div className="relative group">
+                                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-blue-400 transition-colors w-5 h-5" />
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-slate-900/50 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
-                                        placeholder="Enter your password"
+                                        className="w-full bg-slate-950/40 border border-white/[0.05] rounded-xl py-3.5 pl-11 pr-5 text-white text-sm placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500/20 transition-all"
+                                        placeholder="••••••••"
                                         required
                                     />
                                 </div>
@@ -158,17 +210,23 @@ const Welcome: React.FC<WelcomeProps> = ({ onLogin }) => {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+                                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 mt-6 text-sm group"
                             >
                                 {isLoading ? (
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
-                                        Sign In <ArrowRight size={18} />
+                                        Sign In <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}
                             </button>
                         </form>
+
+                        <div className="mt-8 text-center">
+                            <p className="text-[8px] text-slate-600 font-bold uppercase tracking-[0.3em]">
+                                Powered by MagaSoft.cloud
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
             </div>

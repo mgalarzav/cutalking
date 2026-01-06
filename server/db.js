@@ -1,17 +1,15 @@
-const mysql = require('mysql2');
+const { createClient } = require('@supabase/supabase-js');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'cutalking_db',
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 
-module.exports = pool.promise();
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing SUPABASE_URL or SUPABASE_KEY in .env file');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+module.exports = supabase;

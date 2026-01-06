@@ -44,7 +44,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <aside className="hidden md:flex flex-col w-72 glass z-40 m-4 rounded-3xl border-r-0 shadow-2xl sticky top-4 h-[calc(100vh-2rem)]">
         <div className="p-8">
           <h1 className="text-2xl font-extrabold bg-gradient-to-r from-cyan-500 to-blue-600 text-transparent bg-clip-text flex items-center gap-3">
-            <img src="/logo.jpg" alt="CU Talking Logo" className="w-10 h-10 rounded-xl object-cover shadow-lg shadow-blue-500/30" />
+            <img src="/LogoCU.png" alt="CU Talking Logo" className="w-10 h-10 object-contain drop-shadow-lg" />
             CU Talking
           </h1>
         </div>

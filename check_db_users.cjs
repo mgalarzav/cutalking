@@ -2,8 +2,13 @@ const db = require('./server/db');
 
 async function checkDatabase() {
     try {
-        console.log("Attempting to connect to database...");
-        const [rows] = await db.execute('SELECT id, username, password_hash, role FROM users');
+        console.log("Attempting to connect to Supabase...");
+        const { data: rows, error } = await db
+            .from('users')
+            .select('id, username, password_hash, role');
+
+        if (error) throw error;
+
         console.log("Connection successful!");
         console.log("---------------------------------------------------");
         console.log("Users found in database:");
