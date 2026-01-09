@@ -1,7 +1,8 @@
 import { Scenario, UserSettings, UserStats } from './types';
 import { ChefHat, GraduationCap, ShoppingCart, Plane, Briefcase, Ambulance, Coffee, Stethoscope, BedDouble, MapPin, Laptop, Users } from 'lucide-react';
 
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+export const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:3001');
+
 
 export const DEFAULT_SETTINGS: UserSettings = {
   name: 'Guest',
