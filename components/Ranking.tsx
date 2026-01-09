@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Trophy, Medal, Crown, Sparkles, User as UserIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { AppContext } from '../context/AppContext';
+import { API_URL } from '../constants';
 
 interface LeaderboardUser {
     id: number;
@@ -27,7 +28,7 @@ const Ranking: React.FC = () => {
                     return;
                 }
 
-                const response = await fetch('http://localhost:3001/api/leaderboard', {
+                const response = await fetch(`${API_URL}/api/leaderboard`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'

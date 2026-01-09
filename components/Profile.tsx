@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Upload, XCircle, CheckCircle, AlertCircle, Eye, EyeOff, BarChart3, ChevronDown, ChevronUp } from 'lucide-react';
+import { API_URL } from '../constants';
 
 const Profile: React.FC = () => {
     const { stats, settings, updateSettings, user } = useContext(AppContext);
@@ -53,7 +53,7 @@ const Profile: React.FC = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:3001/api/users/${user.id}`, {
+            const response = await fetch(`${API_URL}/api/users/${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const Profile: React.FC = () => {
 
         try {
             // 1. Upload Image
-            const uploadResponse = await fetch('http://localhost:3001/api/upload', {
+            const uploadResponse = await fetch(`${API_URL}/api/upload`, {
                 method: 'POST',
                 body: formData,
             });
@@ -129,7 +129,7 @@ const Profile: React.FC = () => {
 
             // 2. Update User Profile
             const token = localStorage.getItem('token');
-            const updateResponse = await fetch(`http://localhost:3001/api/users/${user.id}`, {
+            const updateResponse = await fetch(`${API_URL}/api/users/${user.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

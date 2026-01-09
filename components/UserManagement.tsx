@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Users, Plus, Pencil, Trash2, X, Search, Shield, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AppContext } from '../context/AppContext';
+import { API_URL } from '../constants';
 
 interface User {
     id: number;
@@ -25,7 +26,7 @@ const UserManagement: React.FC = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/users', {
+            const response = await fetch(`${API_URL}/api/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (!response.ok) throw new Error('Failed to fetch users');
@@ -49,8 +50,8 @@ const UserManagement: React.FC = () => {
 
         try {
             const url = editingUser
-                ? `http://localhost:3001/api/users/${editingUser.id}`
-                : 'http://localhost:3001/api/users';
+                ? `${API_URL}/api/users/${editingUser.id}`
+                : `${API_URL}/api/users`;
 
             const method = editingUser ? 'PUT' : 'POST';
 
@@ -89,7 +90,7 @@ const UserManagement: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this user?')) return;
 
         try {
-            const response = await fetch(`http://localhost:3001/api/users/${id}`, {
+            const response = await fetch(`${API_URL}/api/users/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import * as Icons from 'lucide-react';
-import { SCENARIOS } from '../constants';
+import { SCENARIOS, API_URL } from '../constants';
 
 const Progress: React.FC = () => {
     const { stats, settings, user, updateStats } = useContext(AppContext);
@@ -12,7 +12,7 @@ const Progress: React.FC = () => {
         const fetchProgress = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:3001/api/progress', {
+                const response = await fetch(`${API_URL}/api/progress`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) {
@@ -66,7 +66,7 @@ const Progress: React.FC = () => {
                             if (window.confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
                                 try {
                                     const token = localStorage.getItem('token');
-                                    const response = await fetch('http://localhost:3001/api/progress', {
+                                    const response = await fetch(`${API_URL}/api/progress`, {
                                         method: 'DELETE',
                                         headers: { Authorization: `Bearer ${token}` }
                                     });
@@ -75,7 +75,7 @@ const Progress: React.FC = () => {
 
                                         // Sync with server to ensure DB is updated to 0 stars
                                         if (user && user.id) {
-                                            await fetch(`http://localhost:3001/api/users/${user.id}/sync-stars`, {
+                                            await fetch(`${API_URL}/api/users/${user.id}/sync-stars`, {
                                                 method: 'POST',
                                                 headers: { Authorization: `Bearer ${token}` }
                                             });

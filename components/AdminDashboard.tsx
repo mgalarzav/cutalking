@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Edit, Plus, X, Save } from 'lucide-react';
+import { API_URL } from '../constants';
 
 interface User {
     id: number;
@@ -24,7 +25,7 @@ const AdminDashboard: React.FC = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:3001/api/users', {
+            const response = await fetch(`${API_URL}/api/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (response.ok) {
@@ -49,8 +50,8 @@ const AdminDashboard: React.FC = () => {
         setError('');
 
         const url = editingUser
-            ? `http://localhost:3001/api/users/${editingUser.id}`
-            : 'http://localhost:3001/api/users';
+            ? `${API_URL}/api/users/${editingUser.id}`
+            : `${API_URL}/api/users`;
 
         const method = editingUser ? 'PUT' : 'POST';
 
@@ -81,7 +82,7 @@ const AdminDashboard: React.FC = () => {
         if (!window.confirm('Are you sure you want to delete this user?')) return;
 
         try {
-            const response = await fetch(`http://localhost:3001/api/users/${id}`, {
+            const response = await fetch(`${API_URL}/api/users/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -156,8 +157,8 @@ const AdminDashboard: React.FC = () => {
                                         <td className="p-4 font-medium">{user.username}</td>
                                         <td className="p-4">
                                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${user.role === 'admin'
-                                                    ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
-                                                    : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                                                : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                                                 }`}>
                                                 {user.role.toUpperCase()}
                                             </span>

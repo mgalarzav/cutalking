@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
-import { SCENARIOS } from '../constants';
+import { SCENARIOS, API_URL } from '../constants';
 import { groqService } from '../services/groqService';
 import { deepgramService } from '../services/deepgramService';
 import { Mic, PhoneOff, ArrowLeft, Sparkles, Loader2, MessageSquare, Volume2, RefreshCw } from 'lucide-react';
@@ -185,7 +185,7 @@ const Session: React.FC = () => {
           else if (turns >= 3) progress = 25;
 
           if (progress > 0) {
-            await fetch('http://localhost:3001/api/progress', {
+            await fetch(`${API_URL}/api/progress`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -196,7 +196,7 @@ const Session: React.FC = () => {
           }
 
           // 2. Sync Stars from Backend (Source of Truth)
-          const syncResponse = await fetch(`http://localhost:3001/api/users/${user.id}/sync-stars`, {
+          const syncResponse = await fetch(`${API_URL}/api/users/${user.id}/sync-stars`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`
