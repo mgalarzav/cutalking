@@ -70,7 +70,7 @@ const WelcomeMobile: React.FC<WelcomeMobileProps> = ({ onLogin }) => {
                 />
             </div>
 
-            <div className="relative z-10 flex-1 flex flex-col px-8 pt-12 pb-8">
+            <div className="relative z-10 flex-1 flex flex-col px-8 pt-12 pb-20">
                 <AnimatePresence mode="wait">
                     {view === 'intro' ? (
                         <motion.div
@@ -103,16 +103,7 @@ const WelcomeMobile: React.FC<WelcomeMobileProps> = ({ onLogin }) => {
                             </div>
 
                             {/* Content Section */}
-                            <div className="space-y-6 mb-10">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-white/10 text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em]"
-                                >
-                                    <Sparkles size={12} className="animate-spin-slow" />
-                                    <span>Next-Gen Learning</span>
-                                </motion.div>
+                            <div className="space-y-6 mb-8">
                                 <motion.h1
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -149,7 +140,7 @@ const WelcomeMobile: React.FC<WelcomeMobileProps> = ({ onLogin }) => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1 }}
-                                className="mt-8 text-center"
+                                className="mt-4 text-center"
                             >
                                 <p className="text-[9px] text-slate-600 font-bold uppercase tracking-[0.5em]">
                                     Powered by MagaSoft
